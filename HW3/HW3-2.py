@@ -1,6 +1,7 @@
 import random
 
-try: raise random.choice([ZeroDivisionError, ImportError, KeyError, UnicodeError, StopIteration])
+try: 
+    raise random.choice([ZeroDivisionError, ImportError, KeyError, UnicodeError, StopIteration])
 except ZeroDivisionError:
     print('ERROR ZeroDivision')
 except KeyError:
