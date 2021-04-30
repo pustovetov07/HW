@@ -1,6 +1,7 @@
 import uuid
 from typing import Optional
 
+
 class Student:
     def __init__(self, name: str, age: int, grades: Optional[dict], group: 'Group'):
         self.name = name
@@ -8,27 +9,37 @@ class Student:
         self.grades = grades or {}
         self.group = group
         self._id = uuid.uuid4()
+
     def leave_group(self):
         self.group.delete_student(self)
+
     def change_group(self, other_group):
         self.group.delete_student(self)
         other_group.add_student(self)
+
     @property
     def avg_rate(self):
         return sum(self.grades.values()) / len(self.grades)
+
+
 class Group:
     def __init__(self, name: str):
         self.name = name
         self.students = {}
+
     @property
     def avg_rate(self):
         return sum([student.avg_rate for student in self.students.values()]) / len(self.students)
+
     def add_student(self, student):
         self.students.setdefault(student._id, student)
         student.group = self
+
     def delete_student(self, student: Student):
         self.students.pop(student._id, None)
         student.group = None
+
+
 def chek_its_ok():
     new_group = Group(name='new_group')
     other_group = Group(name='other_group')
@@ -50,6 +61,7 @@ def chek_its_ok():
     print(andrey.name, andrey.group.name)
     new_group.delete_student(andrey)
     print(new_group.students)
-    # print(andrey.name, andrey.group.name)
     new_group.delete_student(oleg)
+
+
 chek_its_ok()
